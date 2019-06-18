@@ -21,7 +21,9 @@ class WordList extends Component {
 
    render() {
       return (
-         <div className='word-list'>{this.renderWordList()}</div>
+         <div className="container">
+            <div className='row'>{this.renderWordList()}</div>
+         </div>
       )
    }
 }

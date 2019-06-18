@@ -36,7 +36,7 @@ class NewWordForm extends Component {
    render() {
       const { word, partOfSpeech, meaning, sentence } = this.state
       return (
-         <div className="row">
+         <div className="row container">
             <form className="col s12" onSubmit={this.handleSubmit}>
 
                <div className="row">

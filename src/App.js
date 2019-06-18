@@ -4,10 +4,10 @@ import WordList from './components/WordList';
 import { Route, Switch } from 'react-router-dom'
 import NewWordForm from './components/NewWordForm';
 import About from './components/About';
-import Navbar from './components/Navbar';
 import uuid from 'uuid/v4';
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css/dist/js/materialize.min.js'
+import Navbar from './components/layout/Navbar';
 
 class App extends Component {
    constructor(props) {
