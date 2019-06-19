@@ -12,8 +12,8 @@ const Word = ({ word, partOfSpeech, meaning, sentence, removeWord }) => {
                <p>{sentence}</p>
             </div>
             <div className="card-action">
-               <button onClick={removeWord}>Delete</button>
-               <a href="#">Edit</a>
+               <i className="material-icons" onClick={removeWord}>delete</i>
+               <i className="material-icons">create</i>
             </div>
          </div>
       </div>

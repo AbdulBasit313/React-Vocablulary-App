@@ -22,7 +22,10 @@ class WordList extends Component {
    render() {
       return (
          <div className="container">
-            <div className='row'>{this.renderWordList()}</div>
+            {!this.props.words.length ?
+               <h4 style={{ textAlign: 'center' }}>You don't have any word saved</h4>
+               :
+               <div className='row'>{this.renderWordList()}</div>}
          </div>
       )
    }

@@ -22,15 +22,20 @@ class NewWordForm extends Component {
 
    handleSubmit(e) {
       e.preventDefault()
-      const newWord = { ...this.state, id: uuid() }
-      this.props.addNewWord(newWord)
-      this.setState({
-         word: '',
-         partOfSpeech: '',
-         meaning: '',
-         sentence: ''
-      })
-      this.props.history.push('/');
+      if (this.state.word.trim() === '' || this.state.partOfSpeech.trim() === '' || this.state.meaning.trim() === '' || this.state.sentence.trim() === '') {
+         alert("Inputs can't be empty")
+      }
+      else {
+         const newWord = { ...this.state, id: uuid() }
+         this.props.addNewWord(newWord)
+         this.setState({
+            word: '',
+            partOfSpeech: '',
+            meaning: '',
+            sentence: ''
+         })
+         this.props.history.push('/');
+      }
    }
 
    render() {

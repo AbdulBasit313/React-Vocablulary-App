@@ -29,3 +29,9 @@ code {
   justify-content: center;
   flex-wrap: wrap;
 } */
+
+.material-icon{
+   position: relative;
+   top: 5px;
+   left: -7px
+}
