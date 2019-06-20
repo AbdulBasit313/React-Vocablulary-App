@@ -8,6 +8,7 @@ import uuid from 'uuid/v4';
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css/dist/js/materialize.min.js'
 import Navbar from './components/layout/Navbar';
+import Search from './components/Search';
 
 class App extends Component {
    constructor(props) {
@@ -27,6 +28,13 @@ class App extends Component {
       })
    }
 
+   searchWords = () => {
+      console.log('clicked')
+      this.setState({
+         // words
+      })
+   }
+
    removeWord = (id) => {
       const words = this.state.words.filter(word => word.id !== id)
       this.setState({ words: words })
@@ -36,6 +44,7 @@ class App extends Component {
       return (
          <div>
             <Navbar />
+            {this.state.words.length > 0 && <Search searchWords={this.searchWords} />}
             <Switch>
                <Route
                   exact path='/'
