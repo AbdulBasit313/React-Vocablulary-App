@@ -8,16 +8,16 @@ import uuid from 'uuid/v4';
 import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
 import Navbar from './components/layout/Navbar';
-import Search from './components/Search';
+
 
 class App extends Component {
    constructor(props) {
       super(props)
       this.state = {
          words: [
-            { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'he lives with a lurking fear of exposure as a fraud', id: uuid() },
-            { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'he lives with a lurking fear of exposure as a fraud', id: uuid() },
-            { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'he lives with a lurking fear of exposure as a fraud', id: uuid() }
+            { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'He lives with a lurking fear of exposure as a fraud', id: uuid() },
+            { word: 'procrastinate', partOfSpeech: 'verb', meaning: 'to be slow or late about doing something', sentence: 'He procrastinated and missed the submission deadline', id: uuid() },
+            { word: 'invincible', partOfSpeech: 'adjective', meaning: 'impossible to defeat or overcome', sentence: 'The loss proved that the team is not invincible', id: uuid() }
          ]
       }
    }
@@ -28,27 +28,25 @@ class App extends Component {
       })
    }
 
-   searchWords = () => {
+   searchWords = (w) => {
       console.log('clicked')
-      this.setState({
-         // words
-      })
+      const words = this.state.words.filter(item => item.word === w)
+      this.setState({ words })
    }
 
    removeWord = (id) => {
-      const words = this.state.words.filter(word => word.id !== id)
-      this.setState({ words: words })
+      const words = this.state.words.filter(item => item.id !== id)
+      this.setState({ words })
    }
 
    render() {
       return (
          <div>
             <Navbar />
-            {this.state.words.length > 0 && <Search searchWords={this.searchWords} />}
             <Switch>
                <Route
                   exact path='/'
-                  render={() => <WordList words={this.state.words} removeWord={this.removeWord}
+                  render={() => <WordList words={this.state.words} removeWord={this.removeWord} searchWords={this.searchWords}
                   />}
                />
                <Route

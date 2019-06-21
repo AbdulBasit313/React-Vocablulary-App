@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
 
+
 class NewWordForm extends Component {
    constructor(props) {
       super(props)
@@ -22,7 +23,7 @@ class NewWordForm extends Component {
 
    handleSubmit(e) {
       e.preventDefault()
-      if (this.state.word.trim() === '' || this.state.partOfSpeech.trim() === '' || this.state.meaning.trim() === '' || this.state.sentence.trim() === '') {
+      if (this.state.word.trim() === '' || this.state.partOfSpeech.trim() === ''|| this.state.meaning.trim() === '' || this.state.sentence.trim() === '') {
          alert("Inputs can't be empty")
       }
       else {
