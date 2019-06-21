@@ -6,7 +6,7 @@ import NewWordForm from './components/NewWordForm';
 import About from './components/About';
 import uuid from 'uuid/v4';
 import 'materialize-css/dist/css/materialize.min.css'
-import M from 'materialize-css/dist/js/materialize.min.js'
+import 'materialize-css/dist/js/materialize.min.js'
 import Navbar from './components/layout/Navbar';
 import Search from './components/Search';
 
