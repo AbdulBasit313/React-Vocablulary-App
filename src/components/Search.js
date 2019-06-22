@@ -10,8 +10,13 @@ class Search extends Component {
 
    submitForm = (e) => {
       e.preventDefault()
-      this.props.searchWords(this.state.text)
-      this.setState({ text: '' })
+      if (this.state.text === '') {
+         this.props.setAlert('Please enter something')
+      }
+      else {
+         this.props.searchWords(this.state.text)
+         this.setState({ text: '' })
+      }
    }
 
    render() {

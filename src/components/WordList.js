@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Word from './Word';
 import Search from './Search';
+import Alert from './layout/Alert';
 
 
 class WordList extends Component {
@@ -23,7 +24,8 @@ class WordList extends Component {
    render() {
       return (
          <div className="container">
-            {this.props.words.length > 0 && <Search searchWords={this.props.searchWords} />}
+            <Alert alert={this.props.alert} />
+            {this.props.words.length > 0 && <Search searchWords={this.props.searchWords} setAlert={this.props.setAlert} />}
             {!this.props.words.length ?
                <h4 style={{ textAlign: 'center' }}>You don't have any word saved</h4>
                :

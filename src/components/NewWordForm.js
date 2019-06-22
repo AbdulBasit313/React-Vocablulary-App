@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
+import Alert from './layout/Alert';
 
 
 class NewWordForm extends Component {
@@ -9,7 +10,8 @@ class NewWordForm extends Component {
          word: '',
          partOfSpeech: '',
          meaning: '',
-         sentence: ''
+         sentence: '',
+         alert: null
       }
       this.handleChange = this.handleChange.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
@@ -23,8 +25,9 @@ class NewWordForm extends Component {
 
    handleSubmit(e) {
       e.preventDefault()
-      if (this.state.word.trim() === '' || this.state.partOfSpeech.trim() === ''|| this.state.meaning.trim() === '' || this.state.sentence.trim() === '') {
-         alert("Inputs can't be empty")
+      if (this.state.word.trim() === '' || this.state.partOfSpeech.trim() === '' || this.state.meaning.trim() === '' || this.state.sentence.trim() === '') {
+         this.setState({ alert: "Inputs can't be empty" })
+         setTimeout(() => this.setState({ alert: null }), 3000)
       }
       else {
          const newWord = { ...this.state, id: uuid() }
@@ -43,6 +46,7 @@ class NewWordForm extends Component {
       const { word, partOfSpeech, meaning, sentence } = this.state
       return (
          <div className="row container">
+            <Alert alert={this.state.alert} />
             <form className="col s12" onSubmit={this.handleSubmit}>
 
                <div className="row">

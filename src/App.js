@@ -17,8 +17,10 @@ class App extends Component {
          words: [
             { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'He lives with a lurking fear of exposure as a fraud', id: uuid() },
             { word: 'procrastinate', partOfSpeech: 'verb', meaning: 'to be slow or late about doing something', sentence: 'He procrastinated and missed the submission deadline', id: uuid() },
-            { word: 'invincible', partOfSpeech: 'adjective', meaning: 'impossible to defeat or overcome', sentence: 'The loss proved that the team is not invincible', id: uuid() }
-         ]
+            { word: 'invincible', partOfSpeech: 'adjective', meaning: 'impossible to defeat or overcome, bulletproof', sentence: 'The loss proved that the team is not invincible', id: uuid() },
+            { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'He lives with a lurking fear of exposure as a fraud', id: uuid() }
+         ],
+         alert: null
       }
    }
 
@@ -29,8 +31,7 @@ class App extends Component {
    }
 
    searchWords = (w) => {
-      console.log('clicked')
-      const words = this.state.words.filter(item => item.word === w)
+      const words = this.state.words.filter(item => item.word.includes(w))
       this.setState({ words })
    }
 
@@ -39,14 +40,23 @@ class App extends Component {
       this.setState({ words })
    }
 
+   setAlert = (msg) => {
+      this.setState({ alert: msg })
+
+      setTimeout(() => this.setState({ alert: null }), 3000)
+   }
+
    render() {
       return (
          <div>
             <Navbar />
+
             <Switch>
                <Route
                   exact path='/'
                   render={() => <WordList words={this.state.words} removeWord={this.removeWord} searchWords={this.searchWords}
+                     alert={this.state.alert}
+                     setAlert={this.setAlert}
                   />}
                />
                <Route
