@@ -21,20 +21,22 @@ class Search extends Component {
 
    render() {
       return (
-         <form onSubmit={this.submitForm}>
-            <div className="row">
-               <div className="input-field col s12">
-                  <input
-                     className='validate'
-                     type="text" name='text' id='text'
-                     onChange={this.onChangeText}
-                     value={this.state.text}
-                  />
-                  <label htmlFor="text">Search</label>
+         <div className="container">
+            <form onSubmit={this.submitForm}>
+               <div className="row">
+                  <div className="input-field col s12">
+                     <input
+                        className='validate'
+                        type="text" name='text' id='text'
+                        onChange={this.onChangeText}
+                        value={this.state.text}
+                     />
+                     <label htmlFor="text">Search</label>
+                  </div>
+                  <button className="waves-effect waves-light btn-small"><i className="material-icons left">find_in_page</i>Go!</button>
                </div>
-               <button className="waves-effect waves-light btn-small"><i className="material-icons left">find_in_page</i>Go!</button>
-            </div>
-         </form>
+            </form>
+         </div>
       )
    }
 }

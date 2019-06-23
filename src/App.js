@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
-import './App.css';
-import WordList from './components/WordList';
+import React, { Component, Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom'
-import NewWordForm from './components/NewWordForm';
-import About from './components/About';
+import WordList from './components/WordList';
+import Navbar from './components/layout/Navbar';
+import Search from './components/Search';
+import Alert from './components/layout/Alert';
+import NewWordForm from './components/pages/NewWordForm';
+import About from './components/pages/About';
 import uuid from 'uuid/v4';
 import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
-import Navbar from './components/layout/Navbar';
+import './App.css';
 
 
 class App extends Component {
@@ -50,14 +52,27 @@ class App extends Component {
       return (
          <div>
             <Navbar />
-
+            <div className="container">
+               <Alert alert={this.state.alert} />
+            </div>
             <Switch>
                <Route
                   exact path='/'
-                  render={() => <WordList words={this.state.words} removeWord={this.removeWord} searchWords={this.searchWords}
-                     alert={this.state.alert}
-                     setAlert={this.setAlert}
-                  />}
+                  render={() => (
+                     <Fragment>
+                        {this.state.words.length > 0 &&
+                           <Search
+                              searchWords={this.searchWords}
+                              setAlert={this.setAlert}
+                           />}
+                        <WordList
+                           words={this.state.words}
+                           removeWord={this.removeWord}
+                           searchWords={this.searchWords}
+                           alert={this.state.alert}
+                           setAlert={this.setAlert}
+                        />
+                     </Fragment>)}
                />
                <Route
                   exact path='/newword'

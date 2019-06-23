@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
-import Alert from './layout/Alert';
+import Alert from '../layout/Alert';
 
 
 class NewWordForm extends Component {
