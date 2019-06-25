@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
-import Alert from '../layout/Alert';
+import Dropdown from '../Dropdown';
 
 
 class NewWordForm extends Component {
@@ -8,10 +8,9 @@ class NewWordForm extends Component {
       super(props)
       this.state = {
          word: '',
-         partOfSpeech: '',
+         partOfSpeech: 'Parts of speech',
          meaning: '',
-         sentence: '',
-         alert: null
+         sentence: ''
       }
       this.handleChange = this.handleChange.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
@@ -26,8 +25,7 @@ class NewWordForm extends Component {
    handleSubmit(e) {
       e.preventDefault()
       if (this.state.word.trim() === '' || this.state.partOfSpeech.trim() === '' || this.state.meaning.trim() === '' || this.state.sentence.trim() === '') {
-         this.setState({ alert: "Inputs can't be empty" })
-         setTimeout(() => this.setState({ alert: null }), 3000)
+         this.props.setAlert("Inputs can't be empty")
       }
       else {
          const newWord = { ...this.state, id: uuid() }
@@ -42,11 +40,16 @@ class NewWordForm extends Component {
       }
    }
 
+   onSelectPartsOfSpeech = (partOfSpeech) => {
+      this.setState({
+         partOfSpeech
+      })
+   }
+
    render() {
       const { word, partOfSpeech, meaning, sentence } = this.state
       return (
          <div className="row container">
-            <Alert alert={this.state.alert} />
             <form className="col s12" onSubmit={this.handleSubmit}>
 
                <div className="row">
@@ -61,16 +64,11 @@ class NewWordForm extends Component {
                   </div>
                </div>
 
-               <div className="row">
-                  <div className="input-field col s12">
-                     <input
-                        className="validate"
-                        type="text" name='partOfSpeech' value={partOfSpeech}
-                        id='partOfSpeech'
-                        onChange={this.handleChange}
-                     />
-                     <label htmlFor="partOfSpeech">Part of Speech</label>
-                  </div>
+               <div className="row dropdown-item">
+                  <Dropdown
+                     onSelectPartsOfSpeech={this.onSelectPartsOfSpeech}
+                     partOfSpeech={partOfSpeech}
+                  />
                </div>
 
                <div className="row">

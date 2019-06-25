@@ -35,3 +35,35 @@ code {
    top: 5px;
    left: -7px
 }
+
+.input-item {
+   cursor: pointer;
+   padding: 5px;
+   color:#9E9E9E
+}
+
+.input-item:hover {
+   background-color: rgb(32, 29, 29);
+   color:white
+}
+
+.list {
+   list-style-type: none;
+}
+
+.list-item {
+   cursor: pointer;
+   padding: 5px;
+   margin-top: 5px;
+   width: 200px;
+   background-color: #ddd;
+}
+
+.list-item:hover {
+   background-color: gray;
+   color:white
+}
+
+.dropdown-item {
+   border-bottom: 1px solid #9E9E9E;
+}

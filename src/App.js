@@ -52,14 +52,14 @@ class App extends Component {
       return (
          <div>
             <Navbar />
-            <div className="container">
-               <Alert alert={this.state.alert} />
-            </div>
             <Switch>
                <Route
                   exact path='/'
                   render={() => (
                      <Fragment>
+                        <div className="container">
+                           <Alert alert={this.state.alert} />
+                        </div>
                         {this.state.words.length > 0 &&
                            <Search
                               searchWords={this.searchWords}
@@ -68,15 +68,20 @@ class App extends Component {
                         <WordList
                            words={this.state.words}
                            removeWord={this.removeWord}
-                           searchWords={this.searchWords}
-                           alert={this.state.alert}
-                           setAlert={this.setAlert}
                         />
                      </Fragment>)}
                />
                <Route
                   exact path='/newword'
-                  render={(props) => <NewWordForm {...props} addNewWord={this.addNewWord} />}
+                  render={(props) => (
+                     <Fragment>
+                        <div className="container">
+                           <Alert alert={this.state.alert} />
+                        </div>
+                        <NewWordForm {...props}
+                           addNewWord={this.addNewWord}
+                           setAlert={this.setAlert} />
+                     </Fragment>)}
                />
                <Route
                   exact path='/about'
@@ -87,5 +92,6 @@ class App extends Component {
       );
    }
 }
+
 
 export default App;
