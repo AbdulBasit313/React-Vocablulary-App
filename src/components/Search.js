@@ -1,44 +1,40 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 
-class Search extends Component {
-   state = {
-      text: ''
-   }
+const Search = ({ setAlert, searchWords }) => {
+   const [text, setText] = useState('')
 
-   onChangeText = (e) => this.setState({ [e.target.name]: e.target.value })
+   const onChangeText = (e) => setText(e.target.value)
 
-   submitForm = (e) => {
+   const submitForm = (e) => {
       e.preventDefault()
-      if (this.state.text === '') {
-         this.props.setAlert('Please enter something')
+      if (text === '') {
+         setAlert('Please enter something')
       }
       else {
-         this.props.searchWords(this.state.text)
-         this.setState({ text: '' })
+         searchWords(text)
+         setText('')
       }
    }
 
-   render() {
-      return (
-         <div className="container">
-            <form onSubmit={this.submitForm}>
-               <div className="row">
-                  <div className="input-field col s12">
-                     <input
-                        className='validate'
-                        type="text" name='text' id='text'
-                        onChange={this.onChangeText}
-                        value={this.state.text}
-                     />
-                     <label htmlFor="text">Search</label>
-                  </div>
-                  <button className="waves-effect waves-light btn-small"><i className="material-icons left">find_in_page</i>Go!</button>
+   return (
+      <div className="container">
+         <form onSubmit={submitForm}>
+            <div className="row">
+               <div className="input-field col s12">
+                  <input
+                     className='validate'
+                     type="text" name='text' id='text'
+                     onChange={onChangeText}
+                     value={text}
+                  />
+                  <label htmlFor="text">Search</label>
                </div>
-            </form>
-         </div>
-      )
-   }
+               <button className="waves-effect waves-light btn-small"><i className="material-icons left">find_in_page</i>Go!</button>
+            </div>
+         </form>
+      </div>
+   )
 }
 
 export default Search

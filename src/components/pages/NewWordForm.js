@@ -1,109 +1,94 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import uuid from 'uuid/v4';
 import Dropdown from '../Dropdown';
 
 
-class NewWordForm extends Component {
-   constructor(props) {
-      super(props)
-      this.state = {
-         word: '',
-         partOfSpeech: 'Parts of speech',
-         meaning: '',
-         sentence: ''
-      }
-      this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
-   }
+const NewWordForm = ({ setAlert, addNewWord, history }) => {
 
-   handleChange(e) {
-      this.setState({
-         [e.target.name]: e.target.value
-      })
-   }
+   const [word, setWord] = useState('')
+   const [partOfSpeech, setPartOfSpeech] = useState('Parts of speech')
+   const [meaning, setMeaning] = useState('')
+   const [sentence, setSentence] = useState('')
 
-   handleSubmit(e) {
+   const handleSubmit = (e) => {
       e.preventDefault()
-      if (this.state.word.trim() === '' || this.state.partOfSpeech.trim() === '' || this.state.meaning.trim() === '' || this.state.sentence.trim() === '') {
-         this.props.setAlert("Inputs can't be empty")
+      if (word.trim() === '' || partOfSpeech.trim() === '' || meaning.trim() === '' || sentence.trim() === '') {
+         setAlert("Inputs can't be empty")
       }
       else {
-         const newWord = { ...this.state, id: uuid() }
-         this.props.addNewWord(newWord)
-         this.setState({
-            word: '',
-            partOfSpeech: '',
-            meaning: '',
-            sentence: ''
-         })
-         this.props.history.push('/');
+         const newWord = { ...{ word, partOfSpeech, meaning, sentence }, id: uuid() }
+         addNewWord(newWord)
+         setWord('')
+         setPartOfSpeech('')
+         setMeaning('')
+         setSentence('')
+         history.push('/');
       }
    }
 
-   onSelectPartsOfSpeech = (partOfSpeech) => {
-      this.setState({
-         partOfSpeech
-      })
+   const onSelectPartsOfSpeech = (partOfSpeech) => {
+      setPartOfSpeech(partOfSpeech)
    }
 
-   render() {
-      const { word, partOfSpeech, meaning, sentence } = this.state
-      return (
-         <div className="row container">
-            <form className="col s12" onSubmit={this.handleSubmit}>
+   return (
+      <div className="row container">
+         <form className="col s12" onSubmit={handleSubmit}>
 
-               <div className="row">
-                  <div className="input-field col s12">
-                     <input
-                        className="validate"
-                        type="text" name='word' value={word}
-                        id='word'
-                        onChange={this.handleChange}
-                     />
-                     <label htmlFor="word">Word</label>
-                  </div>
-               </div>
-
-               <div className="row dropdown-item">
-                  <Dropdown
-                     onSelectPartsOfSpeech={this.onSelectPartsOfSpeech}
-                     partOfSpeech={partOfSpeech}
+            <div className="row">
+               <div className="input-field col s12">
+                  <input
+                     className="validate"
+                     type="text" value={word}
+                     name='word'
+                     id='word'
+                     onChange={(e) => setWord(e.target.value)}
                   />
+                  <label htmlFor="word">Word</label>
                </div>
+            </div>
 
-               <div className="row">
-                  <div className="input-field col s12">
-                     <input
-                        className="validate"
-                        type="text" name='meaning' value={meaning}
-                        id="meaning"
-                        onChange={this.handleChange}
-                     />
-                     <label htmlFor="meaning">Meaning</label>
-                  </div>
+            <div className="row dropdown-item">
+               <Dropdown
+                  onSelectPartsOfSpeech={onSelectPartsOfSpeech}
+                  partOfSpeech={partOfSpeech}
+               />
+            </div>
+
+            <div className="row">
+               <div className="input-field col s12">
+                  <input
+                     className="validate"
+                     type="text" value={meaning}
+                     name='meaning'
+                     id="meaning"
+                     onChange={(e) => setMeaning(e.target.value)}
+                  />
+                  <label htmlFor="meaning">Meaning</label>
                </div>
+            </div>
 
-               <div className="row">
-                  <div className="input-field col s12">
-                     <input
-                        className="validate"
-                        type="text" name='sentence' value={sentence}
-                        id='sentence'
-                        onChange={this.handleChange}
-                     />
-                     <label htmlFor="sentence">Sentence</label>
-                  </div>
+            <div className="row">
+               <div className="input-field col s12">
+                  <input
+                     className="validate"
+                     type="text" value={sentence}
+                     name='sentence'
+                     id='sentence'
+                     onChange={(e) => setSentence(e.target.value)}
+                  />
+                  <label htmlFor="sentence">Sentence</label>
                </div>
+            </div>
 
-               <button className='btn waves-effect waves-light'>
-                  Submit
+            <button className='btn waves-effect waves-light'>
+               Submit
                <i className="material-icons right">send</i>
-               </button>
+            </button>
 
-            </form>
-         </div>
-      )
-   }
+         </form>
+      </div>
+   )
 }
+
 
 export default NewWordForm

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import WordList from './components/WordList';
 import Navbar from './components/layout/Navbar';
@@ -12,85 +12,77 @@ import 'materialize-css/dist/js/materialize.min.js'
 import './App.css';
 
 
-class App extends Component {
-   constructor(props) {
-      super(props)
-      this.state = {
-         words: [
-            { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'He lives with a lurking fear of exposure as a fraud', id: uuid() },
-            { word: 'procrastinate', partOfSpeech: 'verb', meaning: 'to be slow or late about doing something', sentence: 'He procrastinated and missed the submission deadline', id: uuid() },
-            { word: 'invincible', partOfSpeech: 'adjective', meaning: 'impossible to defeat or overcome, bulletproof', sentence: 'The loss proved that the team is not invincible', id: uuid() },
-            { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'He lives with a lurking fear of exposure as a fraud', id: uuid() }
-         ],
-         alert: null
-      }
+const App = () => {
+   const [words, setWords] = useState([
+      { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'He lives with a lurking fear of exposure as a fraud', id: uuid() },
+      { word: 'procrastinate', partOfSpeech: 'verb', meaning: 'to be slow or late about doing something', sentence: 'He procrastinated and missed the submission deadline', id: uuid() },
+      { word: 'invincible', partOfSpeech: 'adjective', meaning: 'impossible to defeat or overcome, bulletproof', sentence: 'The loss proved that the team is not invincible', id: uuid() },
+      { word: 'lurking', partOfSpeech: 'adjective', meaning: 'remaining hidden so as to wait in ambush', sentence: 'He lives with a lurking fear of exposure as a fraud', id: uuid() }
+   ])
+
+   const [alert, setAlert] = useState(null)
+
+   const addNewWord = (newWord) => {
+      setWords([...words, newWord])
    }
 
-   addNewWord = (newWord) => {
-      this.setState({
-         words: [...this.state.words, newWord]
-      })
+   const searchWords = (w) => {
+      const findWord = words.filter(item => item.word.includes(w))
+      setWords(findWord)
    }
 
-   searchWords = (w) => {
-      const words = this.state.words.filter(item => item.word.includes(w))
-      this.setState({ words })
+   const removeWord = (id) => {
+      const deleteWords = words.filter(item => item.id !== id)
+      setWords(deleteWords)
    }
 
-   removeWord = (id) => {
-      const words = this.state.words.filter(item => item.id !== id)
-      this.setState({ words })
+   const showAlert = (msg) => {
+      setAlert(msg)
+
+      setTimeout(() => setAlert(null), 3000)
    }
 
-   setAlert = (msg) => {
-      this.setState({ alert: msg })
-
-      setTimeout(() => this.setState({ alert: null }), 3000)
-   }
-
-   render() {
-      return (
-         <div>
-            <Navbar />
-            <Switch>
-               <Route
-                  exact path='/'
-                  render={() => (
-                     <Fragment>
-                        <div className="container">
-                           <Alert alert={this.state.alert} />
-                        </div>
-                        {this.state.words.length > 0 &&
-                           <Search
-                              searchWords={this.searchWords}
-                              setAlert={this.setAlert}
-                           />}
-                        <WordList
-                           words={this.state.words}
-                           removeWord={this.removeWord}
-                        />
-                     </Fragment>)}
-               />
-               <Route
-                  exact path='/newword'
-                  render={(props) => (
-                     <Fragment>
-                        <div className="container">
-                           <Alert alert={this.state.alert} />
-                        </div>
-                        <NewWordForm {...props}
-                           addNewWord={this.addNewWord}
-                           setAlert={this.setAlert} />
-                     </Fragment>)}
-               />
-               <Route
-                  exact path='/about'
-                  render={() => <About />}
-               />
-            </Switch>
-         </div>
-      );
-   }
+   return (
+      <div>
+         <Navbar />
+         <Switch>
+            <Route
+               exact path='/'
+               render={() => (
+                  <Fragment>
+                     <div className="container">
+                        <Alert alert={alert} />
+                     </div>
+                     {words.length > 0 &&
+                        <Search
+                           searchWords={searchWords}
+                           setAlert={showAlert}
+                        />}
+                     <WordList
+                        words={words}
+                        removeWord={removeWord}
+                     />
+                  </Fragment>)}
+            />
+            <Route
+               exact path='/newword'
+               render={(props) => (
+                  <Fragment>
+                     <div className="container">
+                        <Alert alert={alert} />
+                     </div>
+                     <NewWordForm {...props}
+                        addNewWord={addNewWord}
+                        setAlert={showAlert} />
+                  </Fragment>)}
+            />
+            <Route
+               exact path='/about'
+               render={() => <About />}
+            />
+         </Switch>
+      </div>
+   );
 }
 
 

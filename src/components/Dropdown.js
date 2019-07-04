@@ -1,44 +1,42 @@
-import React, { Component, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 
-class Dropdown extends Component {
-   constructor(props) {
-      super(props)
-      this.state = {
-         items: ['Noun', 'Pronoun', 'Verb', 'Adverb', 'Adjective', 'preposition', 'Conjunction', 'Interjection'],
-         toggleList: false
-      }
+const Dropdown = ({ partOfSpeech, onSelectPartsOfSpeech }) => {
+   // state = {
+   //    items: ['Noun', 'Pronoun', 'Verb', 'Adverb', 'Adjective', 'preposition', 'Conjunction', 'Interjection'],
+   //    toggleList: false
+   // }
+   const [items, setItems] = useState(['Noun', 'Pronoun', 'Verb', 'Adverb', 'Adjective', 'preposition', 'Conjunction', 'Interjection'])
+   const [toggleList, setToggleList] = useState(false)
+
+   const showList = () => setToggleList(!toggleList)
+
+   const onSelect = (item) => {
+      onSelectPartsOfSpeech(item)
+      // this.setState({
+      //    toggleList: !this.state.toggleList
+      // })
+      setToggleList(!toggleList)
    }
 
-   toggleList = () => this.setState({ toggleList: !this.state.toggleList })
-
-   onSelect = (item) => {
-      this.props.onSelectPartsOfSpeech(item)
-      this.setState({
-         toggleList: !this.state.toggleList
-      })
-   }
-
-
-   render() {
-      return (
-         <Fragment>
-            <h6 onClick={this.toggleList} className='input-item'>{this.props.partOfSpeech}</h6>
-            {this.state.toggleList &&
-               <ul className='list'>{this.state.items.map((item, index) => {
-                  return (
-                     <li
-                        className='list-item'
-                        key={index}
-                        onClick={() => this.onSelect(item)}
-                     >
-                        {item}
-                     </li>
-                  )
-               })}</ul>
-            }
-         </Fragment>
-      )
-   }
+   return (
+      <Fragment>
+         <h6 onClick={showList} className='input-item'>{partOfSpeech}</h6>
+         {toggleList &&
+            <ul className='list'>{items.map((item, index) => {
+               return (
+                  <li
+                     className='list-item'
+                     key={index}
+                     onClick={() => onSelect(item)}
+                  >
+                     {item}
+                  </li>
+               )
+            })}</ul>
+         }
+      </Fragment>
+   )
 }
+
 
 export default Dropdown
